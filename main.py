@@ -53,7 +53,7 @@ class Pythomon:
             io.print('Available attacks:')
             for i, attack in enumerate(self.powers):
                 io.print('{}: {}'.format(i, attack[0]))
-            attack_index = input('Choose an attack: ')
+            attack_index = io.input('Choose an attack: ')
             pythomon_attack = self.powers[int(attack_index)]
             if pythomon_attack[1] > random.random():
                 io.print('Pythomon deals {} damage'.format(pythomon_attack[2]))
