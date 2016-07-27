@@ -1,11 +1,12 @@
 import random
 import argparse
-parser = argparse.ArgumentParser(description='Pythomon game coded during PyRa #25')
+from nc_server_utils import Communicator
+parser = argparse.ArgumentParser(
+    description='Pythomon game coded during PyRa #25')
 parser.add_argument('--debug', dest='debug', action='store_true')
 parser.add_argument('--no-debug', dest='debug', action='store_false')
 parser.set_defaults(debug=True)
 args = parser.parse_args()
-from nc_server_utils import Communicator
 MAP_WIDTH = 60
 MAP_HEIGHT = 40
 ENCOUNTER_CHANCE = 0.5
@@ -23,7 +24,7 @@ class Pythomon:
         self.max_hp = 20
         self.cur_hp = 20
         self.powers = [
-            ('Basic power 1', 0.3, 5),
+            ('Basic power 1', 0.7, 5),
         ]
         self.exp_current = 0
         self.name = random.choice(NAMES)
@@ -36,14 +37,33 @@ class Pythomon:
             self.name, self.level, self.cur_hp, self.max_hp)
 
     def fight(self, monster):
-        while monster.hp > 0 and self.hp > 0:
+        while monster.cur_hp > 0 and self.cur_hp > 0:
             monster_attack = random.choice(monster.powers)
-            io.print("Monster uses {}", monster_attack[0])
+            io.print("Monster uses {}".format(monster_attack[0]))
             if monster_attack[1] > random.random():
                 self.get_hit(monster_attack[2])
                 io.print("Monster deals {} damage".format(monster_attack[2]))
                 if not self.cur_hp:
                     io.print("You lost!")
+                    break
+            else:
+                io.print('Monster missed!')
+            io.print('Available attacks:')
+            for i, attack in enumerate(self.powers):
+                io.print('{}: {}'.format(i, attack[0]))
+            attack_index = input('Choose an attack: ')
+            pythomon_attack = self.powers[int(attack_index)]
+            if pythomon_attack[1] > random.random():
+                io.print('Pythomon deals {} damage'.format(pythomon_attack[2]))
+                monster.get_hit(pythomon_attack[2])
+                if not monster.cur_hp:
+                    io.print('You won!')
+                    break
+
+    def get_hit(self, damage):
+        self.cur_hp -= damage
+        if self.cur_hp < 0:
+            self.cur_hp = 0
 
 
 class Player:
