@@ -37,12 +37,18 @@ class Player:
         self.coords[0] += vector[0]
         self.coords[1] += vector[1]
         if random.random() < ENCOUNTER_CHANCE:
+            monster = Pythomon()
             print("Encountered wild monster... growl!!!!")
+            print(monster)
+            self.list_pythomons(True)
 
-    def list_pythomons(self):
-        print("I have the following pythomons:")
-        for pythomon in self.pythomons:
-            print(pythomon)
+    def list_pythomons(self, show_indices=False):
+        print('Available pythomons:')
+        for i, pythomon in enumerate(self.pythomons):
+            if show_indices:
+                print('{}: {}'.format(i, pythomon))
+            else:
+                print(pythomon)
 
 
 if __name__ == '__main__':
