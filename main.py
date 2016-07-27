@@ -1,4 +1,5 @@
 import random
+from nc_server_utils import Communicator
 MAP_WIDTH = 60
 MAP_HEIGHT = 40
 ENCOUNTER_CHANCE = 0.5
@@ -6,8 +7,9 @@ BASE_LEVEL_EXP = 1000
 LEVEL_INCREASE_BASE = 1.3
 
 NAMES = ['Foo', 'Bar', 'Fiz', 'Baz']
-from nc_server_utils import Communicator
-io=Communicator(DEBUG=False)
+io = Communicator(DEBUG=False)
+
+
 class Pythomon:
 
     def __init__(self):
@@ -28,7 +30,14 @@ class Pythomon:
             self.name, self.level, self.cur_hp, self.max_hp)
 
     def fight(self, monster):
-        io.print('Smashing victory!')
+        while monster.hp > 0 and self.hp > 0:
+            monster_attack = random.choice(monster.powers)
+            io.print("Monster uses {}", monster_attack[0])
+            if monster_attack[1] > random.random():
+                self.get_hit(monster_attack[2])
+                io.print("Monster deals {} damage".format(monster_attack[2]))
+                if not self.cur_hp:
+                    io.print("You lost!")
 
 
 class Player:
