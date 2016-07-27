@@ -6,8 +6,8 @@ BASE_LEVEL_EXP = 1000
 LEVEL_INCREASE_BASE = 1.3
 
 NAMES = ['Foo', 'Bar', 'Fiz', 'Baz']
-
-
+from nc_server_utils import Communicator
+io=Communicator(DEBUG=False)
 class Pythomon:
 
     def __init__(self):
@@ -28,7 +28,7 @@ class Pythomon:
             self.name, self.level, self.cur_hp, self.max_hp)
 
     def fight(self, monster):
-        print('Smashing victory!')
+        io.print('Smashing victory!')
 
 
 class Player:
@@ -41,28 +41,29 @@ class Player:
         self.coords[1] += vector[1]
         if random.random() < ENCOUNTER_CHANCE:
             monster = Pythomon()
-            print("Encountered wild monster... growl!!!!")
-            print(monster)
+            io.print("Encountered wild monster... growl!!!!")
+            io.print(monster)
             self.list_pythomons(True)
-            pythomon_index = input('Select a pythomon: ')
+            pythomon_index = io.input('Select a pythomon: ')
             pythomon = self.pythomons[int(pythomon_index)]
             pythomon.fight(monster)
 
     def list_pythomons(self, show_indices=False):
-        print('Available pythomons:')
+        io.print('Available pythomons:')
         for i, pythomon in enumerate(self.pythomons):
             if show_indices:
-                print('{}: {}'.format(i, pythomon))
+                io.print('{}: {}'.format(i, pythomon))
             else:
-                print(pythomon)
+                io.print(pythomon)
 
 
 if __name__ == '__main__':
+
     player = Player()
-    print(player.coords)
+    io.print(player.coords)
 
     while True:
-        command = input()
+        command = io.input()
 
         if command == 'exit' or command == 'quit' or command == 'q':
             break
@@ -78,6 +79,6 @@ if __name__ == '__main__':
             player.list_pythomons()
 
         else:
-            print('Command was not recognized')
+            io.print('Command was not recognized')
 
-        print(player.coords)
+        io.print(player.coords)

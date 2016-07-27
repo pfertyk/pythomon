@@ -24,16 +24,18 @@ class Communicator():
         sock.bind(server_address)
         sock.listen(10)
         self.connection, client_address = sock.accept()
-    def read(self):
+    def input(self,msg=""):
         if self.DEBUG:
-            return input()
+            return input(msg)
         else:
+            if msg:
+                self.print(msg)
             return self.recv_until_newline()
-    def send(self,msg : str):
+    def print(self,msg : str):
         if self.DEBUG:
             print(msg)
         else:
-            self.connection.sendall(str.encode(msg))
+            self.connection.sendall(str.encode(str(msg)+"\n"))
 # if __name__ == "__main__":
 #     while True:
 #         init_sock()
