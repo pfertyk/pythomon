@@ -81,7 +81,7 @@ class Pythomon:
 class Player:
     def __init__(self):
         self.coords = [MAP_WIDTH//2, MAP_HEIGHT//2]
-        self.pythomons = [Pythomon(), Pythomon()]
+        self.pythomons = [Pythomon(), Pythomon(), Pythomon()]
 
     def move(self, vector):
         self.coords[0] += vector[0]
