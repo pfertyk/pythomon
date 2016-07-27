@@ -1,9 +1,9 @@
 import socket
-
+import threading
 # DEBUG=True
 class Communicator():
     HOST = "0.0.0.0"
-    PORT = 10000
+    PORT = 10001
     connection=None #type: socket.socket
     def __init__(self,DEBUG=True):
         self.DEBUG=DEBUG
@@ -17,6 +17,7 @@ class Communicator():
 
     def init_sock(self):
         if self.DEBUG:
+            self.main()
             return
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_address = (self.HOST, self.PORT)
@@ -24,6 +25,7 @@ class Communicator():
         sock.bind(server_address)
         sock.listen(10)
         self.connection, client_address = sock.accept()
+        threading.Thread(target=self.main).start()
     def input(self,msg=""):
         if self.DEBUG:
             return input(msg)
