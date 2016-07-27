@@ -1,4 +1,10 @@
 import random
+import argparse
+parser = argparse.ArgumentParser(description='Pythomon game coded during PyRa #25')
+parser.add_argument('--debug', dest='debug', action='store_true')
+parser.add_argument('--no-debug', dest='debug', action='store_false')
+parser.set_defaults(debug=True)
+args = parser.parse_args()
 from nc_server_utils import Communicator
 MAP_WIDTH = 60
 MAP_HEIGHT = 40
@@ -7,7 +13,7 @@ BASE_LEVEL_EXP = 1000
 LEVEL_INCREASE_BASE = 1.3
 
 NAMES = ['Foo', 'Bar', 'Fiz', 'Baz']
-io = Communicator(DEBUG=False)
+io = Communicator(DEBUG=args.debug)
 
 
 class Pythomon:
