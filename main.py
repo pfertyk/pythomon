@@ -82,6 +82,8 @@ class Player:
             pythomon_index = io.input('Select a pythomon: ')
             pythomon = self.pythomons[int(pythomon_index)]
             pythomon.fight(monster)
+            if not monster.cur_hp:
+                self.pythomons.append(monster)
 
     def list_pythomons(self, show_indices=False):
         io.print('Available pythomons:')
