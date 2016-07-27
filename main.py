@@ -84,6 +84,8 @@ class Player:
     def move(self, vector):
         self.coords[0] += vector[0]
         self.coords[1] += vector[1]
+        for pythomon in self.pythomons:
+            pythomon.cur_hp = min(pythomon.max_hp, pythomon.cur_hp + 1)
         if random.random() < ENCOUNTER_CHANCE:
             monster = Pythomon()
             io.print("Encountered wild monster... growl!!!!")
