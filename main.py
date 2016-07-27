@@ -30,7 +30,7 @@ class Pythomon:
         self.name = random.choice(NAMES)
 
     def check_next_level(self):
-        return BASE_LEVEL_EXP * LEVEL_INCREASE_BASE ** self.level
+        return BASE_LEVEL_EXP * LEVEL_INCREASE_BASE ** (self.level - 1)
 
     def __str__(self):
         return "{}: Level: {} HP {}/{}".format(
@@ -69,6 +69,8 @@ class Pythomon:
                         io.print('Next level in: {} exp'.format(
                             self.check_next_level() - self.exp_current))
                     break
+            else:
+                io.print('Pythomon missed!')
 
     def get_hit(self, damage):
         self.cur_hp -= damage
