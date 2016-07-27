@@ -10,7 +10,7 @@ args = parser.parse_args()
 MAP_WIDTH = 60
 MAP_HEIGHT = 40
 ENCOUNTER_CHANCE = 0.5
-BASE_LEVEL_EXP = 1000
+BASE_LEVEL_EXP = 100
 LEVEL_INCREASE_BASE = 1.3
 
 NAMES = ['Foo', 'Bar', 'Fiz', 'Baz']
@@ -24,12 +24,12 @@ class Pythomon:
         self.max_hp = 20
         self.cur_hp = 20
         self.powers = [
-            ('Basic power 1', 0.7, 5),
+            ('Basic power 1', 0.5, 5),
         ]
         self.exp_current = 0
         self.name = random.choice(NAMES)
 
-    def check_next_level(self, level):
+    def check_next_level(self):
         return BASE_LEVEL_EXP * LEVEL_INCREASE_BASE ** self.level
 
     def __str__(self):
