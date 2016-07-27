@@ -1,16 +1,16 @@
 import socket
 HOST="0.0.0.0"
 PORT=10000
-DEBUG=False
+# DEBUG=True
 connection=None
 def recv_until_newline(connection : socket.socket)->str:
     msg=""
     while True:
         msg+=connection.recv(1).decode("utf-8")
         if "\n" in msg:
-            return msg
+            return msg.replace("\n","")
 
-def init_sock():
+def init_sock(DEBUG : bool):
     if DEBUG:
         return
     global connection
@@ -20,18 +20,19 @@ def init_sock():
     sock.bind(server_address)
     sock.listen(10)
     connection, client_address = sock.accept()
-def read():
+def read(DEBUG : bool):
     if DEBUG:
         return input()
     else:
         return recv_until_newline(connection)
-def send(msg : str):
+def send(msg : str, DEBUG: bool):
     if DEBUG:
         print(msg)
     else:
         connection.sendall(str.encode(msg))
-while True:
-    init_sock()
+if __name__ == "__main__":
     while True:
-        msg=read()
-        send(msg)
+        init_sock()
+        while True:
+            msg=read()
+            send(msg)
