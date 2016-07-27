@@ -1,14 +1,49 @@
+import random
 MAP_WIDTH = 60
 MAP_HEIGHT = 40
+ENCOUNTER_CHANCE = 0.5
+BASE_LEVEL_EXP = 1000
+LEVEL_INCREASE_BASE = 1.3
+
+NAMES = ['Foo', 'Bar', 'Fiz', 'Baz']
+
+
+class Pythomon:
+
+    def __init__(self):
+        self.level = 1
+        self.max_hp = 20
+        self.cur_hp = 20
+        self.powers = [
+            ('Basic power 1', 0.3, 5),
+        ]
+        self.exp_current = 0
+        self.name = random.choice(NAMES)
+
+    def check_next_level(self, level):
+        return BASE_LEVEL_EXP * LEVEL_INCREASE_BASE ** self.level
+
+    def __str__(self):
+        return "{}: Level: {} HP {}/{}".format(
+            self.name, self.level, self.cur_hp, self.max_hp)
 
 
 class Player:
     def __init__(self):
         self.coords = [MAP_WIDTH//2, MAP_HEIGHT//2]
+        self.pythomons = [Pythomon(), Pythomon()]
 
     def move(self, vector):
         self.coords[0] += vector[0]
         self.coords[1] += vector[1]
+        if random.random() < ENCOUNTER_CHANCE:
+            print("Encountered wild monster... growl!!!!")
+
+    def list_pythomons(self):
+        print("I have the following pythomons:")
+        for pythomon in self.pythomons:
+            print(pythomon)
+
 
 if __name__ == '__main__':
     player = Player()
@@ -27,6 +62,9 @@ if __name__ == '__main__':
             player.move([0, 1])
         elif command == 'down':
             player.move([0, -1])
+        elif command == 'list pythomons':
+            player.list_pythomons()
+
         else:
             print('Command was not recognized')
 
