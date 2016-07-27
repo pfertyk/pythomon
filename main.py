@@ -27,6 +27,9 @@ class Pythomon:
         return "{}: Level: {} HP {}/{}".format(
             self.name, self.level, self.cur_hp, self.max_hp)
 
+    def fight(self, monster):
+        print('Smashing victory!')
+
 
 class Player:
     def __init__(self):
@@ -41,6 +44,9 @@ class Player:
             print("Encountered wild monster... growl!!!!")
             print(monster)
             self.list_pythomons(True)
+            pythomon_index = input('Select a pythomon: ')
+            pythomon = self.pythomons[int(pythomon_index)]
+            pythomon.fight(monster)
 
     def list_pythomons(self, show_indices=False):
         print('Available pythomons:')
