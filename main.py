@@ -37,6 +37,8 @@ class Pythomon:
             self.name, self.level, self.cur_hp, self.max_hp)
 
     def fight(self, monster):
+        if not self.cur_hp:
+            io.print('Pythomon is too weak to fight!')
         while monster.cur_hp > 0 and self.cur_hp > 0:
             monster_attack = random.choice(monster.powers)
             io.print("Monster uses {}".format(monster_attack[0]))
@@ -58,6 +60,14 @@ class Pythomon:
                 monster.get_hit(pythomon_attack[2])
                 if not monster.cur_hp:
                     io.print('You won!')
+                    self.exp_current += 100
+                    if self.exp_current >= self.check_next_level():
+                        io.print('Pythomon has leveled up!')
+                        io.print('Current level: {}'.format(self.level))
+                        self.exp_current -= self.check_next_level()
+                        self.level += 1
+                        io.print('Next level in: {} exp'.format(
+                            self.check_next_level() - self.exp_current))
                     break
 
     def get_hit(self, damage):
