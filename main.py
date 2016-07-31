@@ -33,7 +33,7 @@ class Pythomon:
         return BASE_LEVEL_EXP * LEVEL_INCREASE_BASE ** (self.level - 1)
 
     def __str__(self):
-        return "{}: Level: {} HP {}/{}".format(
+        return '{}: Level: {} HP {}/{}'.format(
             self.name, self.level, self.cur_hp, self.max_hp)
 
     def fight(self, monster):
@@ -41,12 +41,12 @@ class Pythomon:
             io.print('Pythomon is too weak to fight!')
         while monster.cur_hp > 0 and self.cur_hp > 0:
             monster_attack = random.choice(monster.powers)
-            io.print("Monster uses {}".format(monster_attack[0]))
+            io.print('Monster uses {}'.format(monster_attack[0]))
             if monster_attack[1] > random.random():
                 self.get_hit(monster_attack[2])
-                io.print("Monster deals {} damage".format(monster_attack[2]))
+                io.print('Monster deals {} damage'.format(monster_attack[2]))
                 if not self.cur_hp:
-                    io.print("You lost!")
+                    io.print('You lost!')
                     break
             else:
                 io.print('Monster missed!')
@@ -90,7 +90,7 @@ class Player:
             pythomon.cur_hp = min(pythomon.max_hp, pythomon.cur_hp + 1)
         if random.random() < ENCOUNTER_CHANCE:
             monster = Pythomon()
-            io.print("Encountered wild monster... growl!!!!")
+            io.print('Encountered wild monster... growl!!!!')
             io.print(monster)
             self.list_pythomons(True)
             pythomon_index = io.input('Select a pythomon: ')
